@@ -1,0 +1,17 @@
+
+services:
+  simple_bank_db:
+    image: postgres:16.3-bullseye
+    container_name: simple-bank-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+    volumes:
+      - simple_bank:/var/lib/postgresql/data
+    ports:
+      - "5030:5432"
+
+volumes:
+  simple_bank:
