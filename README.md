@@ -96,3 +96,28 @@ Making Decision on what database to choose.
 - Write unit tests for CRUD functions.
 - Database driver for postgres: libpq
 - Tools: testing, and testify
+
+## Golang DB Transactions
+
+- Database Transactions: A single unit of work often made up of multiple db operations.
+  Example: Transfer 10 USD from bank account1 to bank account 2
+
+  - Create a transfer record with amount = 10
+  - Create an account entry for account1 with amount = -10
+  - Create an account entry for account2 with amount = +10
+  - Substract 10 from the balance of account1
+  - Add 10 to the balance of account2
+
+- Why do we need db transaction?
+
+  - to provide a reliable and consistent unit of work.
+    even in the case of system failure.
+  - to provide isolation between programs that access the database
+    concurrently
+
+- Database Transaction must satisfy ACID properties.
+  - Atomicity: Either all operations complete successfully or the transactions
+    fails and the db is unchanged.
+  - Consistency: The db state must be valid after the transaction. All constraints must be satisfied.
+  - Isolation: Concurrent transactions must not affect each other.
+  - Durability: Data written by a successfully transaction must be recorded in persistent storage.
