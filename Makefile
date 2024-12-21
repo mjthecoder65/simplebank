@@ -21,4 +21,7 @@ migrate_down:
 sqlc:
 	sqlc generate
 
-.PHONY: simple_bank_db createdb dropdb migrate_down migrate_up sql
+test:
+	go test -v -cover ./...
+
+.PHONY: simple_bank_db createdb dropdb migrate_down migrate_up sql test
