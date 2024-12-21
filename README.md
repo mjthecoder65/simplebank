@@ -10,8 +10,8 @@
 
 # Development Process.
 
--Design database using dbdiagram.io application and export the design to both
-sql and png format.
+- Design database using dbdiagram.io application and export the design to both
+  sql and png format.
 
 - Using golang-migrate as migration too. This enable developers to easily modify the schemas
   commands:
