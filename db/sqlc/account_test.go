@@ -24,6 +24,7 @@ func createRandomAccount(t *testing.T) Account {
 
 	require.NotZero(t, account.ID)
 	require.NotZero(t, account.CreatedAt)
+	require.True(t, account.CreatedAt.Valid)
 
 	return account
 }
@@ -39,11 +40,11 @@ func TestGetAccount(t *testing.T) {
 
 	require.NoError(t, err)
 	require.NotEmpty(t, dbAccount)
+
 	require.Equal(t, account.ID, dbAccount.ID)
 	require.Equal(t, account.Owner, dbAccount.Owner)
 	require.Equal(t, account.Currency, dbAccount.Currency)
 	require.Equal(t, account.Balance, dbAccount.Balance)
-	// require.WithinDuration(t, account.CreatedAt, dbAccount.CreatedAt, time.Second)
 }
 
 func TestUpdateAccount(t *testing.T) {
