@@ -28,7 +28,7 @@ func createRandomAccount(t *testing.T) Account {
 	return account
 }
 
-func TestAccount(t *testing.T) {
+func TestCreateAccount(t *testing.T) {
 	createRandomAccount(t)
 }
 
