@@ -116,8 +116,13 @@ Making Decision on what database to choose.
     concurrently
 
 - Database Transaction must satisfy ACID properties.
+
   - Atomicity: Either all operations complete successfully or the transactions
     fails and the db is unchanged.
   - Consistency: The db state must be valid after the transaction. All constraints must be satisfied.
   - Isolation: Concurrent transactions must not affect each other.
   - Durability: Data written by a successfully transaction must be recorded in persistent storage.
+
+- Transactions Problems:
+  - Deadlocks: occurs when two concurrent transactions cannot make progress because each one
+    waits for the other to release a lock.
