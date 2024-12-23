@@ -86,19 +86,39 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 			return err
 		}
 
-		result.FromAccount, err = q.AddAccountBalance(context.Background(), AddAccountBalanceParams{
-			ID:     arg.FromAccountID,
-			Amount: -arg.Amount,
-		})
+		// NOTE: Avoiding Deadlocks here by reordering the update statements.
+		// Order Can cause DeadLock.
 
-		if err != nil {
-			return nil
+		if arg.FromAccountID < arg.ToAccountID {
+			result.FromAccount, err = q.AddAccountBalance(context.Background(), AddAccountBalanceParams{
+				ID:     arg.FromAccountID,
+				Amount: -arg.Amount,
+			})
+
+			if err != nil {
+				return nil
+			}
+
+			result.ToAccount, err = q.AddAccountBalance(context.Background(), AddAccountBalanceParams{
+				ID:     arg.ToAccountID,
+				Amount: arg.Amount,
+			})
+
+		} else {
+			result.ToAccount, err = q.AddAccountBalance(context.Background(), AddAccountBalanceParams{
+				ID:     arg.ToAccountID,
+				Amount: arg.Amount,
+			})
+
+			result.FromAccount, err = q.AddAccountBalance(context.Background(), AddAccountBalanceParams{
+				ID:     arg.FromAccountID,
+				Amount: -arg.Amount,
+			})
+
+			if err != nil {
+				return nil
+			}
 		}
-
-		result.ToAccount, err = q.AddAccountBalance(context.Background(), AddAccountBalanceParams{
-			ID:     arg.ToAccountID,
-			Amount: arg.Amount,
-		})
 
 		return nil
 	})

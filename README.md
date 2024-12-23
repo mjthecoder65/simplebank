@@ -126,3 +126,6 @@ Making Decision on what database to choose.
 - Transactions Problems:
   - Deadlocks: occurs when two concurrent transactions cannot make progress because each one
     waits for the other to release a lock.
+  - Solved problems with transaction.
+
+## Used Goroutines in the test cases to simulate concurrent transactions.
