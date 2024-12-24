@@ -128,4 +128,20 @@ Making Decision on what database to choose.
     waits for the other to release a lock.
   - Solved problems with transaction.
 
-## Used Goroutines in the test cases to simulate concurrent transactions.
+## Implementing Continuous Integration (CI)
+
+- Tools: Github Actions
+  - Workflow: An automated procedure that contains one or more jobs.
+    - Worflow is made of up one or more jobs.
+    - A workflow is triggered by events happening on a repository or manually or a schedule.
+    - Add .yml file for configuration.
+  - Runner: This is a server that run the jobs.
+    - Each job has its own runner.
+    - You can custom or Github runners.
+  - Job: A set of steps which execute on the same runner.
+    - Normally jobs run in parallel
+    - Dependended jobs run serially.
+  - Step: An individual tasks.
+    - An job can have one or or more steps.
+    - A step contains one action.
+    - Action is a standalone command. A step can have one or more actions.
