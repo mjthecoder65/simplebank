@@ -7,8 +7,18 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16.3-bullseye
+        env:
+          POSTGRES_DB: main
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: "y7jHf&DNWG15"
+
     steps:
       - name: Set up Go
         uses: actions/setup-go@v4
