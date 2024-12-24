@@ -18,6 +18,8 @@ jobs:
           POSTGRES_DB: main
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: "y7jHf&DNWG15"
+        ports:
+          - 5030:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
