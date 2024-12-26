@@ -48,8 +48,8 @@ jobs:
       - name: Create .env file from secrets
         run: |
           echo "DB_SOURCE=${{ secrets.DB_SOURCE }}" >> .env
-          echo "DB_DRIVER=${{ secrets.DB_DRIVER }}" >> .env
-          echo "SERVER_ADDRESS=${{ secrets.SERVER_ADDRESS }}" >> .env
+          echo "DB_DRIVER=${{ vars.DB_DRIVER }}" >> .env
+          echo "SERVER_ADDRESS=${{ vars.SERVER_ADDRESS }}" >> .env
 
       - name: Test
         run: make test
