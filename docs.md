@@ -145,3 +145,24 @@ Making Decision on what database to choose.
     - An job can have one or or more steps.
     - A step contains one action.
     - Action is a standalone command. A step can have one or more actions.
+
+## Developing Restful API using gin-gonic web framework.
+
+- Provides:Routing, Middleware and Authentication features.
+
+```sh
+   # Install gin-gonic
+   go get -u github.com/gin-gonic/gin
+```
+
+## Enviroment Variables and Configurations:
+
+Tools: Viper
+
+- Viper is the most popular tool for reading environment variables
+  and configurations.
+- Viper has the following features:
+  - Find, load, unmarshal config files.
+  - Read config from environment variables or flags.
+  - Read config from remote system.
+  - Live watching and writing config file.
