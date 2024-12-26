@@ -15,9 +15,9 @@ jobs:
       postgres:
         image: postgres:16.3-bullseye
         env:
-          POSTGRES_DB: main
-          POSTGRES_USER: admin
-          POSTGRES_PASSWORD: "y7jHf&DNWG15"
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
           - 5030:5432
         options: >-
@@ -44,6 +44,12 @@ jobs:
 
       - name: Run Migration
         run: make migrate_up
+
+      - name: Create .env file from secrets
+        run: |
+          echo "DB_SOURCE=${{ secrets.DB_SOURCE }}" >> .env
+          echo "DB_DRIVER=${{ secrets.DB_DRIVER }}" >> .env
+          echo "SERVER_ADDRESS=${{ secrets.SERVER_ADDRESS }}" >> .env
 
       - name: Test
         run: make test
