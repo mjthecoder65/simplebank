@@ -166,3 +166,8 @@ Tools: Viper
   - Read config from environment variables or flags.
   - Read config from remote system.
   - Live watching and writing config file.
+
+# Hashing Password for Security
+
+- Tools: Bcrypt
+- Bcrypt package in Go implement provos and Mazieres bcrypt adaptive hashing algorithm. (http://www.usenix.org/event/usenix99/provos/provos.pdf)
