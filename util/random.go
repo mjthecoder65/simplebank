@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"math/rand"
+
+	"github.com/bxcodec/faker/v3"
 )
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -32,8 +34,13 @@ func RandomString(n int) string {
 	return builder.String()
 }
 
+func RandomPassword() string {
+	n := int(RandomInt(8, 20))
+	return RandomString(n)
+}
+
 func RandomOwner() string {
-	return RandomString(6)
+	return faker.Username()
 }
 
 func RandomMoney() int64 {
@@ -44,4 +51,8 @@ func RandomCurrency() string {
 	currencies := []string{"EUR", "USD", "CAD"}
 	n := len(currencies)
 	return currencies[random.Intn(n)]
+}
+
+func RandomEmail() string {
+	return faker.Email()
 }
