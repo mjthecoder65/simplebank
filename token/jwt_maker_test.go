@@ -1,7 +1,6 @@
 package token
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -19,7 +18,6 @@ func TestJWTMaker(t *testing.T) {
 	duration := time.Minute
 
 	token, err := jwtMaker.CreateToken(username, duration)
-	fmt.Println(token)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
