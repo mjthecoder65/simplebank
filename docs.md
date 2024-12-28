@@ -171,3 +171,7 @@ Tools: Viper
 
 - Tools: Bcrypt
 - Bcrypt package in Go implement provos and Mazieres bcrypt adaptive hashing algorithm. (http://www.usenix.org/event/usenix99/provos/provos.pdf)
+
+# Authention and Authorization:
+
+Tools: JWT token package and Paseto.
