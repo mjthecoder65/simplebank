@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"time"
 
@@ -12,7 +13,7 @@ import (
 
 type createUserRequest struct {
 	Username string `json:"username" binding:"required,alphanum"`
-	Email    string `json:"email" binding:"required, email"`
+	Email    string `json:"email" binding:"required,email"`
 	FullName string `json:"full_name" binding:"required,min=3"`
 	Password string `json:"password" binding:"required,min=6"`
 }
@@ -72,6 +73,46 @@ func (server *Server) createUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, resp)
 }
 
-func (server *Server) login(ctx *gin.Context) {
+type loginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
+type loginUserResponse struct {
+	AccessToken string       `json:"access_token"`
+	User        userResponse `json:"user"`
+}
+
+func (server *Server) login(ctx *gin.Context) {
+	var req loginRequest
+
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	user, err := server.store.GetUser(context.Background(), req.Username)
+
+	if err != nil {
+		if errors.Is(err, db.ErrRecordNotFound) {
+			ctx.JSON(http.StatusNotFound, errorResponse(err))
+			return
+		}
+
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	if !util.IsValidPassword(req.Password, user.HashedPassword) {
+		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
+		return
+	}
+
+	accessToken, err := server.maker.CreateToken(user.Username, 120*time.Minute)
+	res := loginUserResponse{
+		AccessToken: accessToken,
+		User:        NewUserResponse(user),
+	}
+
+	ctx.JSON(http.StatusOK, res)
 }
