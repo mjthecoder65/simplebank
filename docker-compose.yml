@@ -1,8 +1,16 @@
-
 services:
-  simple_bank_db:
+  backend_api:
+    build: .
+    restart: always
+    container_name: simplebank-backend
+    ports:
+      - 8080:8080
+    env_file: .env
+    depends_on:
+      - db   
+  db:
     image: postgres:16.3-bullseye
-    container_name: simple-bank-db
+    container_name: simplebank-db
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB_NAME}
@@ -12,6 +20,11 @@ services:
       - simple_bank:/var/lib/postgresql/data
     ports:
       - "5030:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   simple_bank:
