@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 )
 
@@ -17,10 +18,10 @@ type Payload struct {
 	Username  string    `json:"username"`
 	IssuedAt  time.Time `json:"issued_at"`
 	ExpiredAt time.Time `json:"expired_at"`
-	Aud       string    `json:"aud"`
+	jwt.RegisteredClaims
 }
 
-func (payload *Payload) Valid() error {
+func (payload *Payload) Validate() error {
 	if time.Now().After(payload.ExpiredAt) {
 		return ErrExpiredToken
 	}
