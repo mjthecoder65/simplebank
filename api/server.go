@@ -35,6 +35,9 @@ func NewServer(config util.Config, store *db.Store) *Server {
 		v.RegisterValidation("currency", validCurrency)
 	}
 
+	router.GET("/health", server.CheckHealth)
+	router.GET("/readiness", server.CheckReadiness)
+
 	router.POST("/users", server.createUser)
 	router.POST("users/login", server.login)
 
