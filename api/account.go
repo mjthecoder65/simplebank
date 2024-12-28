@@ -5,10 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	db "github.com/mjthecoder65/simplebank/db/sqlc"
+	"github.com/mjthecoder65/simplebank/token"
 )
 
 type createAccountRequest struct {
-	Owner    string `json:"owner" binding:"required"`
 	Currency string `json:"currency" binding:"required,currency"`
 }
 
@@ -20,8 +20,10 @@ func (server *Server) CreateAccount(ctx *gin.Context) {
 		return
 	}
 
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+
 	arg := db.CreateAccountParams{
-		Owner:    req.Owner,
+		Owner:    authPayload.Username,
 		Currency: req.Currency,
 		Balance:  0,
 	}
@@ -57,19 +59,10 @@ func (server *Server) getAccount(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, account)
 }
 
-type listAccountRequest struct {
-	Owner string `form:"owner" binding:"required"`
-}
-
 func (server *Server) listAccounts(ctx *gin.Context) {
-	var req listAccountRequest
 
-	if err := ctx.ShouldBindQuery(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
-		return
-	}
-
-	accounts, err := server.store.ListOwnerAccounts(ctx, req.Owner)
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+	accounts, err := server.store.ListOwnerAccounts(ctx, authPayload.Username)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
