@@ -1,6 +1,7 @@
 package token
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -18,6 +19,7 @@ func TestJWTMaker(t *testing.T) {
 	duration := time.Minute
 
 	token, err := jwtMaker.CreateToken(username, duration)
+	fmt.Println(token)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
@@ -43,12 +45,11 @@ func TestExpiredJWTToken(t *testing.T) {
 }
 
 func TestInvalidJWTToken(t *testing.T) {
-	jwtToken := jwt.NewWithClaims(jwt.SigningMethodNone,
-		jwt.MapClaims{
-			"username": faker.Username(),
-			"exp":      time.Now().Add(time.Minute).Unix(),
-		},
-	)
+	payload, err := NewPayload(faker.Username(), time.Minute)
+	require.NoError(t, err)
+	require.NotEmpty(t, payload)
+
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodNone, payload)
 
 	token, err := jwtToken.SignedString(jwt.UnsafeAllowNoneSignatureType)
 	require.NoError(t, err)
