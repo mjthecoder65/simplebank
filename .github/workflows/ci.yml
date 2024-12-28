@@ -48,6 +48,7 @@ jobs:
       - name: Create .env file from secrets
         run: |
           echo "DB_SOURCE=${{ secrets.DB_SOURCE }}" >> .env
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
           echo "DB_DRIVER=${{ vars.DB_DRIVER }}" >> .env
           echo "SERVER_ADDRESS=${{ vars.SERVER_ADDRESS }}" >> .env
 
