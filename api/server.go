@@ -1,20 +1,32 @@
 package api
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	db "github.com/mjthecoder65/simplebank/db/sqlc"
+	"github.com/mjthecoder65/simplebank/token"
+	"github.com/mjthecoder65/simplebank/util"
 )
 
 type Server struct {
 	store  *db.Store
 	router *gin.Engine
+	maker  token.Maker
 }
 
-func NewServer(store *db.Store) *Server {
+func NewServer(config util.Config, store *db.Store) *Server {
+	tokenMaker, err := token.NewJWTMaker(config.JWTSecretKey)
+
+	if err != nil {
+		log.Fatal("failed to get token maker")
+	}
+
 	server := &Server{
 		store: store,
+		maker: tokenMaker,
 	}
 
 	router := gin.Default()
