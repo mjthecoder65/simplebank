@@ -18,10 +18,10 @@ type Server struct {
 }
 
 func NewServer(config util.Config, store *db.Store) *Server {
-	tokenMaker, err := token.NewJWTMaker(config.JWTSecretKey)
+	tokenMaker, err := token.NewPasetoMaker(config.PasetoSecretKey)
 
 	if err != nil {
-		log.Fatal("failed to get token maker")
+		log.Fatal("failed to get token maker", err)
 	}
 
 	server := &Server{
