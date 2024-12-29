@@ -178,4 +178,9 @@ Tools: JWT token package and Paseto.
 
 # Deployments
 
-- Tools: Kubernetes, Github Action, ECR, Docker, Amazon RDS, docker-compose.yml for development.
+- Tools: Kubernetes (EKS), AWS Secret Manager, Github Action, ECR, Docker, Amazon RDS, docker-compose.yml for development.
+
+```sh
+    aws configure
+    aws secretsmanager get-secret-value --secret-id simplebank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]'
+```
