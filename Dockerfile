@@ -19,7 +19,7 @@ RUN --mount=type=cache,target=/go/pkg/mod/cache \
 FROM scratch 
 WORKDIR /app
 COPY --from=builder /app/main .
-COPY .env .
+COPY app.env .
 COPY db/migration ./db/migration
 
 EXPOSE 8080
