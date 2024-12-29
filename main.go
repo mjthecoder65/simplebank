@@ -25,7 +25,11 @@ func main() {
 	}
 
 	store := db.NewStore(conn)
-	server := api.NewServer(config, store)
+	server, err := api.NewServer(config, store)
+
+	if err != nil {
+		log.Fatal("failed to create new server instance", err)
+	}
 
 	err = server.Start(config.ServerAddress)
 
