@@ -178,4 +178,4 @@ Tools: JWT token package and Paseto.
 
 # Deployments
 
-- Tools: Kubernetes, ECR, Docker, Amazon RDS, docker-compose.yml for development.
+- Tools: Kubernetes, Github Action, ECR, Docker, Amazon RDS, docker-compose.yml for development.
