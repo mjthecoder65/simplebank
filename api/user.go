@@ -108,7 +108,7 @@ func (server *Server) login(ctx *gin.Context) {
 		return
 	}
 
-	accessToken, err := server.maker.CreateToken(user.Username, 120*time.Minute)
+	accessToken, err := server.maker.CreateToken(user.Username, server.config.AccessTokenDuration)
 	res := loginUserResponse{
 		AccessToken: accessToken,
 		User:        NewUserResponse(user),
