@@ -17,11 +17,12 @@ type Server struct {
 	maker  token.Maker
 }
 
-func NewServer(config util.Config, store *db.Store) *Server {
+func NewServer(config util.Config, store *db.Store) (*Server, error) {
 	tokenMaker, err := token.NewPasetoMaker(config.PasetoSecretKey)
 
 	if err != nil {
 		log.Fatal("failed to get token maker", err)
+		return nil, err
 	}
 
 	server := &Server{
@@ -49,7 +50,7 @@ func NewServer(config util.Config, store *db.Store) *Server {
 	authRouters.POST("/transfers", server.CreateTransfer)
 	server.router = router
 
-	return server
+	return server, nil
 }
 
 func (server *Server) Start(address string) error {
