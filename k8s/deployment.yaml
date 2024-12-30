@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simplebank-api
+  labels:
+    app: simplebank-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simplebank-api
+  template:
+    metadata:
+      labels:
+        app: simplebank-api
+    spec:
+      containers:
+        - name: simplebank-api
+          image: 318057566050.dkr.ecr.ap-northeast-2.amazonaws.com/simplebank:7bb1c1de28e77a52511e8b12a55e46b1aa6cbed1
+          ports:
+            - containerPort: 8080
+              name: http-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simplebank-api
+spec:
+  selector:
+    matchLabels:
+      app: simplebank-api
+  ports:
+    - protocal: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
