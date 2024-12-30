@@ -184,3 +184,16 @@ Tools: JWT token package and Paseto.
     aws configure
     aws secretsmanager get-secret-value --secret-id simplebank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]'
 ```
+
+- Setting Up EKS
+  Tools: Kubernetes, K9s.
+
+```sh
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0-beta.0/deploy/static/provider/aws/deploy.yaml
+
+  # Connecting to the EKS cluster.
+  aws eks update-kubeconfig --name simplebank --region ap-northeast-2
+  kubectl config context <cluster_ARN>
+  kubectl cluster-info
+  aws sts get-caller-identity
+```
