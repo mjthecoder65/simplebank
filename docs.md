@@ -197,3 +197,21 @@ Tools: JWT token package and Paseto.
   kubectl cluster-info
   aws sts get-caller-identity
 ```
+
+# GRPC - Google Remove Procedure Call
+
+- Four types of GRPC
+
+  - Unary gRPC
+  - Client Streaming gRPC
+  - Server Streaming gRPC
+  - Bidirectional Streaming gRPC
+
+- Essential Commands
+
+```sh
+    brew install protobuf
+    go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+    export PATH="$PATH:$(go env GOPATH)/bin"
+```
