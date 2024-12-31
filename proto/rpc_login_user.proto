@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+import "user.proto";
+
+option go_package = "github.com/mjthecoder65/simplebank/pb";
+
+message LoginUserRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    string access_token = 1;
+    User user = 2;
+}
