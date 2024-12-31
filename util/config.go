@@ -13,6 +13,7 @@ type Config struct {
 	JWTSecretKey        string        `mapstructure:"JWT_SECRET_KEY"`
 	PasetoSecretKey     string        `mapstructure:"PASETO_SECRET_KEY"`
 	AccessTokenDuration time.Duration `mapstructure:"ACCESS_TOKEN_DURATION"`
+	GRPCServerAddress   string        `mapstructure:"GRPC_SERVER_ADDRESS"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
